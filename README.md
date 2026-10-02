@@ -151,6 +151,7 @@ docker-compose up -d
 | `DASHBOARD_PORT` | `7505` | Port d'acces au dashboard |
 | `FREEBOX_HOST` | `mafreebox.freebox.fr` | Hostname de la Freebox |
 | `VITE_LOGO_DEV_TOKEN` | _(vide)_ | Cle API [logo.dev](https://logo.dev) pour les logos des appareils (optionnel) |
+| `ENABLE_DEBUG_ENDPOINTS` | `false` | Active `GET /api/debug/lan-raw` (JSON brut de `/lan/browser/pub`, `/wifi/ap`, stations, `/repeater`). Contient des MAC / noms d'appareils : a n'activer que ponctuellement |
 
 ### Mise a jour Docker
 
@@ -280,6 +281,7 @@ Au premier lancement, vous devrez autoriser l'application sur la Freebox :
 - **WPS** - Activation/desactivation du WPS avec bouton push
 - **Filtrage MAC** - Gestion de la liste blanche/noire
 - **QR Code** - Generation de QR codes pour connexion rapide
+- **Wi-Fi par point d'acces** - Appareils Wi-Fi groupes par box / repeteur avec norme (Wi-Fi 4 a 7, 6E), bande, signal, debits PHY et live, duree de connexion (MCS et largeur de canal pour les clients de la box). Les compteurs par bande de la box n'incluent plus les clients des repeteurs
 
 ### VPN
 - **Multi-protocoles** - Support OpenVPN (routed/bridge), PPTP, WireGuard
@@ -404,6 +406,20 @@ npm run dev
 
 ```bash
 npm run build
+```
+
+### Tests et typecheck
+
+```bash
+npm test           # tests unitaires (mapping Wi-Fi, fixtures dans tests/fixtures)
+npm run typecheck  # tsc --noEmit
+```
+
+### Capturer les donnees brutes de la box
+
+```bash
+ENABLE_DEBUG_ENDPOINTS=true docker compose -f docker-compose.local.yml up -d --build
+curl http://localhost:7505/api/debug/lan-raw > lan-raw.json
 ```
 
 ## Architecture du projet
