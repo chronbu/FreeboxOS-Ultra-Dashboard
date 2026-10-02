@@ -100,9 +100,9 @@ export const mapLanHostToDevice = (host: LanHost): Device => {
   // Get connection type from access_point.connectivity_type (most reliable)
   const connection: Device['connection'] = ap?.connectivity_type === 'wifi' ? 'wifi' : 'ethernet';
 
-  // Speed from access_point (bytes/s -> Mbps), only while the device is active
-  const speedDown = ap && host.active ? bytesPerSecToMbps(ap.rx_rate) : 0;
-  const speedUp = ap && host.active ? bytesPerSecToMbps(ap.tx_rate) : 0;
+  // Live throughput from the device point of view (see getLiveRates),
+  // only meaningful while the device is active
+  const live = ap && host.active ? getLiveRates(ap) : { downMbps: 0, upMbps: 0 };
 
   const accessPoint = ap && (ap.type === 'gateway' || ap.type === 'repeater')
     ? { type: ap.type, uid: ap.uid !== undefined && ap.uid !== null ? String(ap.uid) : '', mac: ap.mac || undefined }
@@ -113,8 +113,8 @@ export const mapLanHostToDevice = (host: LanHost): Device => {
     name: host.primary_name || host.vendor_name || 'Unknown Device',
     type: mapHostType(host.host_type),
     connection,
-    speedDown,
-    speedUp,
+    speedDown: live.downMbps,
+    speedUp: live.upMbps,
     active,
     mac: host.l2ident?.id,
     ip: ipv4?.addr,

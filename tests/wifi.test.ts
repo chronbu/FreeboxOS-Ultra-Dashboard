@@ -172,6 +172,17 @@ test('device with unknown values keeps raw labels', () => {
   assert.equal(device.wifi?.phyDownMbps, null);
 });
 
+test('live rates are expressed from the device point of view', () => {
+  // tx_rate = sent by the access point = device download
+  const iphone = byName(devices, 'iPhone de Camille');
+  assert.equal(iphone.speedDown, 20);
+  assert.equal(iphone.speedUp, 0);
+  assert.equal(iphone.wifi?.liveDownMbps, 20);
+  const nas = byName(devices, 'NAS');
+  assert.equal(nas.speedDown, 2);
+  assert.equal(nas.speedUp, 1);
+});
+
 test('wired and offline hosts', () => {
   const nas = byName(devices, 'NAS');
   assert.equal(nas.connection, 'ethernet');
