@@ -1,0 +1,153 @@
+{
+  "0": {
+    "success": true,
+    "result": [
+      {
+        "id": "F4:CA:E7:00:00:12-AA:00:00:00:00:04",
+        "mac": "AA:00:00:00:00:04",
+        "bssid": "F4:CA:E7:00:00:12",
+        "hostname": "",
+        "state": "authorized",
+        "inactive": 0,
+        "conn_duration": 3600,
+        "rx_bytes": 1,
+        "tx_bytes": 2,
+        "rx_rate": 10,
+        "tx_rate": 20,
+        "signal": -71,
+        "flags": {
+          "ht": true,
+          "vht": false,
+          "authorized": true
+        },
+        "last_tx": {
+          "bitrate": 722,
+          "mcs": 7,
+          "width": "20",
+          "shortgi": true
+        },
+        "last_rx": {
+          "bitrate": 650,
+          "mcs": 7,
+          "width": "20",
+          "shortgi": false
+        }
+      }
+    ]
+  },
+  "1": {
+    "success": true,
+    "result": [
+      {
+        "id": "F4:CA:E7:00:00:15-aa:00:00:00:00:01",
+        "mac": "aa:00:00:00:00:01",
+        "bssid": "F4:CA:E7:00:00:15",
+        "hostname": "",
+        "state": "authorized",
+        "inactive": 0,
+        "conn_duration": 3600,
+        "rx_bytes": 1,
+        "tx_bytes": 2,
+        "rx_rate": 10,
+        "tx_rate": 20,
+        "signal": -48,
+        "flags": {
+          "he": true,
+          "authorized": true
+        },
+        "last_tx": {
+          "bitrate": 12009,
+          "he_mcs": 11,
+          "nss": 2,
+          "width": "80"
+        },
+        "last_rx": {
+          "bitrate": 12009,
+          "he_mcs": 11,
+          "width": "80"
+        }
+      },
+      {
+        "id": "F4:CA:E7:00:00:15-F4:CA:E7:11:11:11",
+        "mac": "F4:CA:E7:11:11:11",
+        "bssid": "F4:CA:E7:00:00:15",
+        "hostname": "",
+        "state": "authorized",
+        "inactive": 0,
+        "conn_duration": 3600,
+        "rx_bytes": 1,
+        "tx_bytes": 2,
+        "rx_rate": 10,
+        "tx_rate": 20,
+        "signal": -45,
+        "flags": {
+          "authorized": true
+        },
+        "last_tx": {
+          "bitrate": 28820,
+          "width": "80+80"
+        },
+        "last_rx": {
+          "bitrate": 28820
+        }
+      }
+    ]
+  },
+  "2": {
+    "success": true,
+    "result": [
+      {
+        "id": "F4:CA:E7:00:00:16-AA:00:00:00:00:02",
+        "mac": "AA:00:00:00:00:02",
+        "bssid": "F4:CA:E7:00:00:16",
+        "hostname": "",
+        "state": "authorized",
+        "inactive": 0,
+        "conn_duration": 3600,
+        "rx_bytes": 1,
+        "tx_bytes": 2,
+        "rx_rate": 10,
+        "tx_rate": 20,
+        "signal": -52,
+        "flags": {
+          "eht": true
+        },
+        "last_tx": {
+          "bitrate": 28820,
+          "eht_mcs": 13,
+          "nss": 2,
+          "width": "160"
+        },
+        "last_rx": null
+      },
+      {
+        "id": "F4:CA:E7:00:00:16-AA:00:00:00:00:03",
+        "mac": "AA:00:00:00:00:03",
+        "bssid": "F4:CA:E7:00:00:16",
+        "hostname": "",
+        "state": "authorized",
+        "inactive": 0,
+        "conn_duration": 3600,
+        "rx_bytes": 1,
+        "tx_bytes": 2,
+        "rx_rate": 10,
+        "tx_rate": 20,
+        "signal": -63,
+        "flags": {
+          "he": true
+        },
+        "last_tx": {},
+        "last_rx": {
+          "bitrate": 24019,
+          "vht_mcs": -1,
+          "he_mcs": 11,
+          "width": 160
+        }
+      }
+    ]
+  },
+  "3": {
+    "success": true,
+    "result": []
+  }
+}

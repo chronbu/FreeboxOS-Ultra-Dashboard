@@ -171,6 +171,69 @@ export interface WifiStation {
   signal: number;
 }
 
+// Per-direction link stats of a station (/wifi/ap/{id}/stations/ last_rx / last_tx).
+// Every field is optional: content varies with firmware and Wi-Fi generation.
+export interface WifiStationLinkStats {
+  bitrate?: number;   // assumed 100 kbit/s units, like phy_*_rate
+  mcs?: number;       // HT (Wi-Fi 4) MCS index
+  vht_mcs?: number;   // VHT (Wi-Fi 5) MCS index
+  he_mcs?: number;    // HE (Wi-Fi 6/6E) MCS index - field name to be confirmed
+  eht_mcs?: number;   // EHT (Wi-Fi 7) MCS index - field name to be confirmed
+  nss?: number;       // spatial streams - field name to be confirmed
+  width?: string | number; // negotiated channel width, e.g. "80"
+  shortgi?: boolean;
+}
+
+// Station as returned by /wifi/ap/{id}/stations/ (extended, all optional extras)
+export interface WifiApStation extends Partial<WifiStation> {
+  mac?: string;
+  flags?: Record<string, boolean>;
+  last_rx?: WifiStationLinkStats;
+  last_tx?: WifiStationLinkStats;
+}
+
+// Station enriched by our backend with the AP it was fetched from
+// (GET /api/wifi/ap-stations)
+export interface ApStationEntry {
+  apId: number;
+  apName?: string;
+  apBand?: string;
+  apChannelWidth?: number;
+  station: WifiApStation;
+}
+
+// Freebox repeater (/repeater/), fields as exposed by the Freebox API v8+
+export interface FreeboxRepeater {
+  id: number;
+  name?: string;
+  model?: string;            // e.g. "fbxwmr"
+  status?: string;           // starting | running | rebooting | updating | reboot_failure | update_failure
+  connection?: string;       // connected | disconnected
+  main_mac?: string;
+  sn?: string;
+  firmware_version?: string;
+  api_ver?: string;
+  led_activated?: boolean;
+  enabled?: boolean;
+  last_seen?: number;
+  boot_time?: number;
+}
+
+// GET /api/wifi/repeaters response
+export interface RepeatersResponse {
+  available: boolean;        // false when /repeater/ failed (unsupported, rights...)
+  repeaters: FreeboxRepeater[];
+  error?: string;
+}
+
+// Per access point WiFi device counts (GET /api/wifi/full)
+export interface AccessPointDeviceCount {
+  type: 'gateway' | 'repeater';
+  uid: string;
+  total: number;
+  byBand: Record<'2g4' | '5g' | '6g' | 'other', number>;
+}
+
 // LAN types
 export interface LanInterface {
   name: string;
@@ -192,15 +255,16 @@ export interface LanHostAccessPoint {
     max_port_speed: number;
     link: string;
   };
+  // Fields may be missing depending on firmware / device: keep them optional
   wifi_information?: {
-    band: string;
-    sess_duration: number;
-    phy_rx_rate: number;
-    phy_tx_rate: number;
-    ssid: string;
-    standard: string;
-    bssid: string;
-    signal: number;
+    band?: string;          // "2d4g" | "2g4" | "5g" | "6g" ...
+    sess_duration?: number; // seconds
+    phy_rx_rate?: number;   // station -> AP, see PHY_RATE_UNIT_KBPS
+    phy_tx_rate?: number;   // AP -> station, see PHY_RATE_UNIT_KBPS
+    ssid?: string;
+    standard?: string;      // "n" | "ac" | "ax" | "be" | "a" | "b" | "g" ...
+    bssid?: string;
+    signal?: number;        // dBm
   };
 }
 

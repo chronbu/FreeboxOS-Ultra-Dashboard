@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "result": [
+    {
+      "id": 1,
+      "name": "Répéteur Salon",
+      "model": "fbxwmr",
+      "status": "running",
+      "connection": "connected",
+      "main_mac": "F4:CA:E7:11:11:11",
+      "sn": "FBXWMR-0001",
+      "firmware_version": "1.2.3",
+      "api_ver": "14.0",
+      "led_activated": true,
+      "enabled": true,
+      "last_seen": 1790000000,
+      "boot_time": 1789740800
+    },
+    {
+      "id": 2,
+      "name": "Répéteur Étage",
+      "model": "fbxwmr",
+      "status": "running",
+      "connection": "connected",
+      "main_mac": "F4:CA:E7:22:22:22",
+      "sn": "FBXWMR-0002",
+      "firmware_version": "1.2.3",
+      "api_ver": "14.0",
+      "led_activated": false,
+      "enabled": true,
+      "last_seen": 1790000000,
+      "boot_time": 1789913600
+    }
+  ]
+}
