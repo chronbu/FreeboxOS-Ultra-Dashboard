@@ -281,7 +281,7 @@ Au premier lancement, vous devrez autoriser l'application sur la Freebox :
 - **WPS** - Activation/desactivation du WPS avec bouton push
 - **Filtrage MAC** - Gestion de la liste blanche/noire
 - **QR Code** - Generation de QR codes pour connexion rapide
-- **Wi-Fi par point d'acces** - Appareils Wi-Fi groupes par box / repeteur avec norme (Wi-Fi 4 a 7, 6E), bande, signal, debits PHY et live, duree de connexion (MCS et largeur de canal pour les clients de la box). Les compteurs par bande de la box n'incluent plus les clients des repeteurs
+- **Wi-Fi par point d'acces** - Appareils Wi-Fi groupes par box / repeteur avec norme (Wi-Fi 4 a 7, 6E), bande, signal, debits PHY et live, duree de connexion (MCS et largeur de canal pour les clients de la box). Les compteurs par bande de la box n'incluent plus les clients des repeteurs. La norme affichee est celle declaree par la Freebox : les repeteurs Wi-Fi 7 (firmware 2.9.0) peuvent indiquer Wi-Fi 6 (802.11ax) pour un appareil connecte en Wi-Fi 7
 
 ### VPN
 - **Multi-protocoles** - Support OpenVPN (routed/bridge), PPTP, WireGuard

@@ -75,7 +75,15 @@ const GENERATION_LABELS: Record<Exclude<WifiGeneration, 'unknown'>, string> = {
   wifi7: 'Wi-Fi 7'
 };
 
-/** Human readable standard label. Unknown values are displayed as-is. */
+/**
+ * Human readable standard label. Unknown values are displayed as-is.
+ *
+ * NOTE: this is the standard DECLARED by the box / repeater. Observed on Free
+ * Wi-Fi 7 repeaters (fbxwmr-r3, firmware 2.9.0): an iPhone that reports
+ * 802.11be on its side is listed as "ax" by both /lan/browser/pub/ and
+ * /repeater/{id}/host/. The PHY rate cannot tell them apart either (Wi-Fi 6
+ * and 7 share the same rates up to MCS11), so no correction is attempted.
+ */
 export const getStandardLabel = (standard?: string | null, band?: string | null): string => {
   const generation = getWifiGeneration(standard, band);
   if (generation === 'unknown') return standard ? standard : '—';
@@ -129,12 +137,14 @@ export const getSignalBars = (quality: SignalQuality): number => {
 /**
  * Unit of `phy_rx_rate` / `phy_tx_rate` in `access_point.wifi_information`.
  *
- * HYPOTHESIS (to be validated on a real box): the Freebox reports PHY rates in
- * units of 100 kbit/s. Supporting evidence from real values:
- *   - 5851  -> 585.1 Mb/s = 802.11ac, 2 streams, 80 MHz, MCS7, long GI (585.0)
- *   - 7800  -> 780.0 Mb/s = 802.11ac, 2 streams, 80 MHz, MCS9, long GI (780.0)
+ * Units of 100 kbit/s, confirmed on a Freebox Ultra + Wi-Fi 7 repeaters
+ * (fbxwmr-r3, firmware 2.9.0): every value matches a theoretical 802.11 rate.
+ *   - 5851  -> 585.1 Mb/s  = 802.11ac, 2 streams, 80 MHz, MCS7, long GI (585.0)
+ *   - 7800  -> 780.0 Mb/s  = 802.11ac, 2 streams, 80 MHz, MCS9, long GI (780.0)
  *   - 12009 -> 1200.9 Mb/s = 802.11ax, 2 streams, 80 MHz, MCS11, GI 0.8 µs (1201)
- * If this turns out to be wrong, only this constant needs to change.
+ *   - 19215 -> 1921.5 Mb/s = 2 streams, 160 MHz, MCS9, GI 0.8 µs (1921.6)
+ *   - 21613 -> 2161.3 Mb/s = 2 streams, 160 MHz, MCS10, GI 0.8 µs (2161.8)
+ * Should a future firmware change it, only this constant needs to change.
  */
 export const PHY_RATE_UNIT_KBPS = 100;
 

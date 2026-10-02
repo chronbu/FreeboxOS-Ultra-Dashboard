@@ -98,6 +98,10 @@ test('PHY rates are converted from 100 kb/s units', () => {
   assert.equal(phyRateToMbps(5851), 585.1);
   assert.equal(phyRateToMbps(7800), 780);
   assert.equal(phyRateToMbps(12009), 1200.9);
+  // Real capture (iPhone on a Wi-Fi 7 repeater, 160 MHz 2x2 MCS9 / MCS10)
+  assert.equal(phyRateToMbps(19215), 1921.5);
+  assert.equal(phyRateToMbps(21613), 2161.3);
+  assert.equal(formatMbps(2161.3), '2,16 Gb/s');
   assert.equal(phyRateToMbps(0), null);
   assert.equal(phyRateToMbps(undefined), null);
   assert.equal(formatMbps(585.1), '585 Mb/s');

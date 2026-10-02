@@ -178,6 +178,15 @@ const getLinkDetails = (device: Device): string | null => {
 
 const GRID_COLUMNS = 'md:grid md:grid-cols-[minmax(0,2.2fr)_minmax(0,1.3fr)_minmax(0,1.2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,0.8fr)] md:items-center md:gap-4';
 
+// Tooltip of the norme badge: the value comes from the access point, which
+// may under-report (e.g. Wi-Fi 7 client listed as 802.11ax by a repeater)
+const getStandardTooltip = (device: Device): string => {
+  const source = device.accessPoint?.type === 'repeater' ? 'le répéteur' : 'la box';
+  return device.wifi?.standard
+    ? `Norme déclarée par ${source} : 802.11${device.wifi.standard}`
+    : `Norme non communiquée par ${source}`;
+};
+
 const DeviceRow: React.FC<{ device: Device; isBackhaul: boolean }> = ({ device, isBackhaul }) => {
   const wifi = device.wifi;
   if (!wifi) return null;
@@ -198,7 +207,7 @@ const DeviceRow: React.FC<{ device: Device; isBackhaul: boolean }> = ({ device, 
 
       {/* Norme + bande */}
       <div className="flex flex-wrap items-center gap-1.5 mb-3 md:mb-0">
-        <Pill className={GENERATION_STYLES[wifi.generation]} title={wifi.standard ? `802.11${wifi.standard}` : 'Norme inconnue'}>
+        <Pill className={GENERATION_STYLES[wifi.generation]} title={getStandardTooltip(device)}>
           {wifi.standardLabel}
         </Pill>
         <Pill className={BAND_STYLES[wifi.band]}>{wifi.bandLabel}</Pill>
@@ -453,7 +462,8 @@ export const WifiClientsPage: React.FC<WifiClientsPageProps> = ({ onBack }) => {
         <p className="text-[11px] text-gray-600 leading-relaxed">
           Débit PHY : débit de liaison radio négocié (↓ vers l'appareil, ↑ depuis l'appareil). Le MCS et la largeur de canal
           ne sont disponibles que pour les appareils connectés directement à la box ; l'API ne les expose pas pour les clients
-          des répéteurs.
+          des répéteurs. La norme est celle déclarée par la box ou le répéteur : les répéteurs Wi-Fi 7 peuvent indiquer
+          Wi-Fi 6 (802.11ax) pour un appareil réellement connecté en Wi-Fi 7.
         </p>
       </main>
     </div>
