@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { freeboxApi } from '../services/freeboxApi.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 import { modelDetection } from '../services/modelDetection.js';
+import { buildApStationEntries } from '../../src/utils/wifiMapping.js';
 
 const router = Router();
 
@@ -130,6 +131,46 @@ router.get('/full', asyncHandler(async (_req, res) => {
       devicesByBand: filteredDevicesByBand
     }
   });
+}));
+
+// GET /api/wifi/repeaters - List Free repeaters (name, model, status...)
+// Never fails: `available: false` when /repeater/ is not supported or denied,
+// so the UI can fall back on "Répéteur {uid}".
+router.get('/repeaters', asyncHandler(async (_req, res) => {
+  const result = await freeboxApi.getRepeaters();
+  if (result.success && Array.isArray(result.result)) {
+    res.json({ success: true, result: { available: true, repeaters: result.result } });
+    return;
+  }
+  if (result.success) {
+    // Success without list (no repeater configured)
+    res.json({ success: true, result: { available: true, repeaters: [] } });
+    return;
+  }
+  console.log('[WiFi] /repeater/ unavailable:', result.error_code, result.msg);
+  res.json({
+    success: true,
+    result: { available: false, repeaters: [], error: result.msg || result.error_code || 'unavailable' }
+  });
+}));
+
+// GET /api/wifi/ap-stations - Stations of every box radio, flattened and tagged
+// with the AP they come from (MCS / negotiated channel width for box clients)
+router.get('/ap-stations', asyncHandler(async (_req, res) => {
+  const aps = await freeboxApi.getWifiAps();
+  if (!aps.success || !Array.isArray(aps.result)) {
+    res.json({ success: true, result: [] });
+    return;
+  }
+  const apList = aps.result as { id: number; name?: string; config?: { band?: string }; status?: { channel_width?: number } }[];
+  const responses = await Promise.allSettled(apList.map((ap) => freeboxApi.getWifiApStations(ap.id)));
+  const stationsByAp: Record<string, unknown> = {};
+  responses.forEach((response, i) => {
+    if (response.status === 'fulfilled' && response.value.success) {
+      stationsByAp[String(apList[i].id)] = response.value.result;
+    }
+  });
+  res.json({ success: true, result: buildApStationEntries(apList, stationsByAp) });
 }));
 
 // GET /api/wifi/stations - Get all WiFi stations (connected devices)

@@ -530,6 +530,19 @@ class FreeboxApiService {
         return this.request('PUT', '/wifi/mlo/config/', data);
     }
 
+    // ==================== REPEATERS ====================
+
+    // List of Free Wi-Fi repeaters (id, name, model, status, main_mac...).
+    // May fail on boxes without repeater support: callers must handle it.
+    async getRepeaters(): Promise<FreeboxApiResponse> {
+        return this.request('GET', API_ENDPOINTS.REPEATER);
+    }
+
+    // Hosts seen by a given repeater
+    async getRepeaterHosts(repeaterId: number): Promise<FreeboxApiResponse> {
+        return this.request('GET', `${API_ENDPOINTS.REPEATER}${repeaterId}/host/`);
+    }
+
     // ==================== LAN ====================
 
     async getLanConfig(): Promise<FreeboxApiResponse> {
