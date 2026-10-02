@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  formatDuration,
+  formatSessionDuration,
   formatMbps,
   getBandLabel,
   getSignalQuality,
@@ -109,10 +109,10 @@ test('channel width and duration helpers', () => {
   assert.equal(parseChannelWidth(320), 320);
   assert.equal(parseChannelWidth('80+80'), null);
   assert.equal(parseChannelWidth(undefined), null);
-  assert.equal(formatDuration(1814247), '20 j 23 h');
-  assert.equal(formatDuration(7200), '2 h 00 min');
-  assert.equal(formatDuration(42), '42 s');
-  assert.equal(formatDuration(undefined), '—');
+  assert.equal(formatSessionDuration(1814247), '20 j 23 h');
+  assert.equal(formatSessionDuration(7200), '2 h 00 min');
+  assert.equal(formatSessionDuration(42), '42 s');
+  assert.equal(formatSessionDuration(undefined), '—');
 });
 
 // ==================== Host mapping ====================

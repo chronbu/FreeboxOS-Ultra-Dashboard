@@ -177,7 +177,7 @@ export const parseChannelWidth = (raw?: string | number | null): number | null =
 // ==================== Durée ====================
 
 /** Format a session duration in seconds ("3 j 4 h", "2 h 05 min", "42 s"). */
-export const formatDuration = (seconds?: number | null): string => {
+export const formatSessionDuration = (seconds?: number | null): string => {
   if (typeof seconds !== 'number' || !Number.isFinite(seconds) || seconds < 0) return '—';
   const s = Math.floor(seconds);
   const days = Math.floor(s / 86400);

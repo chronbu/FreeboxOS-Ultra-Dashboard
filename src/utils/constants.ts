@@ -73,6 +73,8 @@ export const API_ROUTES = {
   WIFI_BSS: '/api/wifi/bss',
   WIFI_FULL: '/api/wifi/full',
   WIFI_STATIONS: '/api/wifi/stations',
+  WIFI_AP_STATIONS: '/api/wifi/ap-stations',
+  WIFI_REPEATERS: '/api/wifi/repeaters',
   WIFI_PLANNING: '/api/wifi/planning',
   WIFI_MAC_FILTER: '/api/wifi/mac-filter',
   WIFI_WPS: '/api/wifi/wps',

@@ -9,11 +9,12 @@ import {
   Power,
   LogOut,
   Home,
-  Network
+  Network,
+  Wifi
 } from 'lucide-react';
 import { useCapabilitiesStore } from '../../stores/capabilitiesStore';
 
-export type PageType = 'dashboard' | 'network' | 'tv' | 'phone' | 'files' | 'vms' | 'analytics' | 'settings';
+export type PageType = 'dashboard' | 'network' | 'wifi' | 'tv' | 'phone' | 'files' | 'vms' | 'analytics' | 'settings';
 
 interface FooterProps {
   currentPage?: PageType;
@@ -26,6 +27,7 @@ interface FooterProps {
 const allTabs: { id: PageType; label: string; icon: React.ElementType }[] = [
   { id: 'dashboard', label: 'Accueil', icon: Home },
   { id: 'network', label: 'Réseau', icon: Network },
+  { id: 'wifi', label: 'Wi-Fi', icon: Wifi },
   { id: 'tv', label: 'Télévision', icon: Tv },
   { id: 'phone', label: 'Téléphone', icon: Phone },
   { id: 'files', label: 'Fichiers', icon: Folder },
