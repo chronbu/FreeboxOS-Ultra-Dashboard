@@ -27,6 +27,8 @@ services:
       - FREEBOX_TOKEN_FILE=/app/data/freebox_token.json
       - VITE_PORT=${DASHBOARD_PORT:-3000}
       - PORT=${SERVER_PORT:-3001}
+      # Raw Freebox payloads on /api/debug/lan-raw (disabled by default)
+      - ENABLE_DEBUG_ENDPOINTS=${ENABLE_DEBUG_ENDPOINTS:-false}
     volumes:
       # Mount source code for hot reload
       - .:/app
