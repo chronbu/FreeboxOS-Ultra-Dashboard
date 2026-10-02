@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { freeboxApi } from '../services/freeboxApi.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 import { modelDetection } from '../services/modelDetection.js';
+import { buildApStationEntries, countWifiDevicesByAccessPoint } from '../../src/utils/wifiMapping.js';
 
 const router = Router();
 
@@ -46,18 +47,6 @@ router.put('/bss/:id', asyncHandler(async (req, res) => {
   res.json(result);
 }));
 
-// WiFi device type for band counting
-interface WifiLanDevice {
-  active?: boolean;
-  reachable?: boolean;
-  access_point?: {
-    connectivity_type?: string;
-    wifi_information?: {
-      band?: string;
-    };
-  };
-}
-
 // GET /api/wifi/full - Get complete WiFi status (APs + BSS combined)
 router.get('/full', asyncHandler(async (_req, res) => {
   // Fetch all WiFi data in parallel, plus LAN devices for WiFi count
@@ -73,35 +62,30 @@ router.get('/full', asyncHandler(async (_req, res) => {
   const apsData = aps.status === 'fulfilled' && aps.value.success ? aps.value.result : [];
   const bssData = bss.status === 'fulfilled' && bss.value.success ? bss.value.result : [];
 
-  // Count WiFi devices from LAN data, grouped by band
-  let wifiDeviceCount = 0;
-  const devicesByBand: Record<string, number> = { '2g4': 0, '5g': 0, '6g': 0 };
-
-  if (lanDevices.status === 'fulfilled' && lanDevices.value.success && Array.isArray(lanDevices.value.result)) {
-    const wifiDevices = lanDevices.value.result.filter(
-      (device: WifiLanDevice) =>
-        device.active && device.reachable && device.access_point?.connectivity_type === 'wifi'
-    );
-    wifiDeviceCount = wifiDevices.length;
-
-    // Count by band
-    for (const device of wifiDevices) {
-      const band = (device as WifiLanDevice).access_point?.wifi_information?.band?.toLowerCase() || '';
-      if (band.includes('6g')) {
-        devicesByBand['6g']++;
-      } else if (band.includes('5g')) {
-        devicesByBand['5g']++;
-      } else if (band.includes('2') || band.includes('2g4') || band.includes('2.4')) {
-        devicesByBand['2g4']++;
-      }
-    }
-  }
+  // Count WiFi devices from LAN data, per access point and per band.
+  // Devices attached to a repeater must NOT be counted on the box radios
+  // (upstream issue #55): `devicesByBand` only counts the box clients.
+  const hosts = lanDevices.status === 'fulfilled' && lanDevices.value.success && Array.isArray(lanDevices.value.result)
+    ? lanDevices.value.result
+    : [];
+  const counts = countWifiDevicesByAccessPoint(hosts);
+  const devicesByBand: Record<string, number> = {
+    '2g4': counts.gateway.byBand['2g4'],
+    '5g': counts.gateway.byBand['5g'],
+    '6g': counts.gateway.byBand['6g']
+  };
+  const repeaterDevicesByBand: Record<string, number> = {
+    '2g4': counts.repeaterTotal['2g4'],
+    '5g': counts.repeaterTotal['5g'],
+    '6g': counts.repeaterTotal['6g']
+  };
 
   // Filter out 6GHz data if model doesn't support it
   const supports6ghz = modelDetection.supportsWifi6ghz();
   let filteredAps = apsData || [];
   let filteredBss = bssData || [];
-  const filteredDevicesByBand = { ...devicesByBand };
+  let wifiDeviceCount = counts.total;
+  let gatewayDeviceCount = counts.gateway.total;
 
   // NOTE: Inactive/disabled WiFi bands (e.g., 5GHz power-saving mode on Ultra)
   // are NOT returned by the Freebox API, so we cannot display them.
@@ -116,8 +100,10 @@ router.get('/full', asyncHandler(async (_req, res) => {
     filteredBss = bssData.filter(
       (bss: { band?: string }) => !bss.band?.toLowerCase().includes('6g')
     );
-    // Remove 6GHz device count
-    filteredDevicesByBand['6g'] = 0;
+    // Remove 6GHz device count (box only: repeaters have their own radios)
+    wifiDeviceCount -= devicesByBand['6g'];
+    gatewayDeviceCount -= devicesByBand['6g'];
+    devicesByBand['6g'] = 0;
   }
 
   res.json({
@@ -126,10 +112,57 @@ router.get('/full', asyncHandler(async (_req, res) => {
       config: configData,
       aps: filteredAps,
       bss: filteredBss,
-      wifiDeviceCount: supports6ghz ? wifiDeviceCount : wifiDeviceCount - devicesByBand['6g'],
-      devicesByBand: filteredDevicesByBand
+      // Total WiFi devices (box + repeaters)
+      wifiDeviceCount,
+      // Box radios only
+      gatewayDeviceCount,
+      devicesByBand,
+      // All repeaters together, then the detail per access point
+      repeaterDeviceCount: counts.repeaterTotal.total,
+      repeaterDevicesByBand,
+      devicesByAccessPoint: [counts.gateway, ...counts.repeaters]
     }
   });
+}));
+
+// GET /api/wifi/repeaters - List Free repeaters (name, model, status...)
+// Never fails: `available: false` when /repeater/ is not supported or denied,
+// so the UI can fall back on "Répéteur {uid}".
+router.get('/repeaters', asyncHandler(async (_req, res) => {
+  const result = await freeboxApi.getRepeaters();
+  if (result.success && Array.isArray(result.result)) {
+    res.json({ success: true, result: { available: true, repeaters: result.result } });
+    return;
+  }
+  if (result.success) {
+    // Success without list (no repeater configured)
+    res.json({ success: true, result: { available: true, repeaters: [] } });
+    return;
+  }
+  console.log('[WiFi] /repeater/ unavailable:', result.error_code, result.msg);
+  res.json({
+    success: true,
+    result: { available: false, repeaters: [], error: result.msg || result.error_code || 'unavailable' }
+  });
+}));
+
+// GET /api/wifi/ap-stations - Stations of every box radio, flattened and tagged
+// with the AP they come from (MCS / negotiated channel width for box clients)
+router.get('/ap-stations', asyncHandler(async (_req, res) => {
+  const aps = await freeboxApi.getWifiAps();
+  if (!aps.success || !Array.isArray(aps.result)) {
+    res.json({ success: true, result: [] });
+    return;
+  }
+  const apList = aps.result as { id: number; name?: string; config?: { band?: string }; status?: { channel_width?: number } }[];
+  const responses = await Promise.allSettled(apList.map((ap) => freeboxApi.getWifiApStations(ap.id)));
+  const stationsByAp: Record<string, unknown> = {};
+  responses.forEach((response, i) => {
+    if (response.status === 'fulfilled' && response.value.success) {
+      stationsByAp[String(apList[i].id)] = response.value.result;
+    }
+  });
+  res.json({ success: true, result: buildApStationEntries(apList, stationsByAp) });
 }));
 
 // GET /api/wifi/stations - Get all WiFi stations (connected devices)

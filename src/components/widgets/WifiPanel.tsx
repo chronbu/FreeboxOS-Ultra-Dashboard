@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { QrCode, X, Copy, Check, Wifi, Eye, EyeOff } from 'lucide-react';
+import { QrCode, X, Copy, Check, Wifi, Eye, EyeOff, RadioTower, ChevronRight } from 'lucide-react';
 import { Toggle } from '../ui/Toggle';
 import type { WifiNetwork } from '../../types';
+import type { RepeaterDevicesSummary } from '../../stores/wifiStore';
 
 interface WifiPanelProps {
   networks: WifiNetwork[];
   totalDevices?: number;
+  // Devices on the repeaters: shown apart, the per-band counters above only
+  // count the clients of the box radios
+  repeaterDevices?: RepeaterDevicesSummary;
   onToggle?: (id: string, enabled: boolean) => void;
+  onShowDevices?: () => void;
 }
+
+const BAND_LABELS: [string, string][] = [['2g4', '2,4 GHz'], ['5g', '5 GHz'], ['6g', '6 GHz']];
 
 // Generate WiFi connection string for QR code (standard format)
 const generateWifiString = (ssid: string, password: string, security: string = 'WPA'): string => {
@@ -140,7 +147,7 @@ const QrCodeModal: React.FC<{
   );
 };
 
-export const WifiPanel: React.FC<WifiPanelProps> = ({ networks, onToggle }) => {
+export const WifiPanel: React.FC<WifiPanelProps> = ({ networks, repeaterDevices, onToggle, onShowDevices }) => {
   const [selectedNetwork, setSelectedNetwork] = useState<WifiNetwork | null>(null);
 
   // Handle WiFi toggle with confirmation - warns that it may restart WiFi module
@@ -208,11 +215,36 @@ export const WifiPanel: React.FC<WifiPanelProps> = ({ networks, onToggle }) => {
 
               <div className="flex justify-between mt-2 text-xs text-gray-500 font-mono">
                 <span>Taux d'occupation {estimatedLoad}%</span>
-                <span className="text-emerald-400">Appareils {deviceCount}</span>
+                <span className="text-emerald-400">Appareils box {deviceCount}</span>
               </div>
             </div>
           );
         })}
+
+        {/* Repeater clients (not counted on the box radios above) */}
+        {repeaterDevices && repeaterDevices.total > 0 && (
+          <button
+            onClick={onShowDevices}
+            disabled={!onShowDevices}
+            className="w-full text-left bg-[#1a1a1a] rounded-lg p-3 border border-gray-700/50 hover:bg-[#202020] transition-colors flex items-center justify-between gap-2"
+          >
+            <div className="flex items-center gap-2 min-w-0">
+              <RadioTower size={16} className="text-blue-400 shrink-0" />
+              <div className="min-w-0">
+                <div className="text-sm font-medium text-gray-300">
+                  Répéteurs <span className="text-emerald-400 font-mono text-xs ml-1">Appareils {repeaterDevices.total}</span>
+                </div>
+                <div className="text-xs text-gray-500 font-mono truncate">
+                  {BAND_LABELS
+                    .filter(([key]) => (repeaterDevices.byBand[key] || 0) > 0)
+                    .map(([key, label]) => `${label} : ${repeaterDevices.byBand[key]}`)
+                    .join(' · ')}
+                </div>
+              </div>
+            </div>
+            {onShowDevices && <ChevronRight size={16} className="text-gray-500 shrink-0" />}
+          </button>
+        )}
       </div>
 
       {/* QR Code Modal */}

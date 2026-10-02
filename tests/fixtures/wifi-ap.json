@@ -1,0 +1,73 @@
+{
+  "success": true,
+  "result": [
+    {
+      "id": 0,
+      "name": "2.4G",
+      "config": {
+        "band": "2d4g",
+        "channel_width": "40",
+        "primary_channel": 6,
+        "secondary_channel": 0
+      },
+      "status": {
+        "state": "active",
+        "channel_width": 40,
+        "primary_channel": 6,
+        "secondary_channel": 2,
+        "dfs_cac_remaining_time": 0
+      }
+    },
+    {
+      "id": 1,
+      "name": "5G",
+      "config": {
+        "band": "5g",
+        "channel_width": "160",
+        "primary_channel": 36,
+        "secondary_channel": 0
+      },
+      "status": {
+        "state": "active",
+        "channel_width": 160,
+        "primary_channel": 36,
+        "secondary_channel": 0,
+        "dfs_cac_remaining_time": 0
+      }
+    },
+    {
+      "id": 2,
+      "name": "6G",
+      "config": {
+        "band": "6g",
+        "channel_width": "320",
+        "primary_channel": 37,
+        "secondary_channel": 0
+      },
+      "status": {
+        "state": "active",
+        "channel_width": 320,
+        "primary_channel": 37,
+        "secondary_channel": 0,
+        "dfs_cac_remaining_time": 0
+      }
+    },
+    {
+      "id": 3,
+      "name": "5G (2)",
+      "config": {
+        "band": "5g",
+        "channel_width": "80",
+        "primary_channel": 100,
+        "secondary_channel": 0
+      },
+      "status": {
+        "state": "active",
+        "channel_width": 80,
+        "primary_channel": 100,
+        "secondary_channel": 0,
+        "dfs_cac_remaining_time": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,713 @@
+{
+  "success": true,
+  "result": [
+    {
+      "id": "ether-aa:00:00:00:00:01",
+      "primary_name": "iPhone de Camille",
+      "primary_name_manual": true,
+      "host_type": "smartphone",
+      "l2ident": {
+        "id": "AA:00:00:00:00:01",
+        "type": "mac_address"
+      },
+      "vendor_name": "Apple, Inc.",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "iPhone de Camille",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.11",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "gateway",
+        "uid": "c0f8b6a1d2e3f4a5b6c7d8e9f0a1b2c3",
+        "mac": "F4:CA:E7:00:00:15",
+        "connectivity_type": "wifi",
+        "rx_rate": 1250,
+        "tx_rate": 2500000,
+        "rx_bytes": 120000000,
+        "tx_bytes": 4800000000,
+        "wifi_information": {
+          "band": "5g",
+          "standard": "ax",
+          "signal": -48,
+          "phy_rx_rate": 12009,
+          "phy_tx_rate": 12009,
+          "sess_duration": 7200,
+          "ssid": "Freebox-Maison",
+          "bssid": "F4:CA:E7:00:00:15"
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:02",
+      "primary_name": "MacBook Pro",
+      "primary_name_manual": true,
+      "host_type": "laptop",
+      "l2ident": {
+        "id": "AA:00:00:00:00:02",
+        "type": "mac_address"
+      },
+      "vendor_name": "Apple, Inc.",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "MacBook Pro",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.12",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "gateway",
+        "uid": "c0f8b6a1d2e3f4a5b6c7d8e9f0a1b2c3",
+        "mac": "F4:CA:E7:00:00:16",
+        "connectivity_type": "wifi",
+        "rx_rate": 80000,
+        "tx_rate": 12500000,
+        "rx_bytes": 0,
+        "tx_bytes": 0,
+        "wifi_information": {
+          "band": "6g",
+          "standard": "be",
+          "signal": -52,
+          "phy_rx_rate": 28820,
+          "phy_tx_rate": 28820,
+          "sess_duration": 3600,
+          "ssid": "Freebox-Maison",
+          "bssid": "F4:CA:E7:00:00:16"
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:03",
+      "primary_name": "Pixel Tablet",
+      "primary_name_manual": true,
+      "host_type": "tablet",
+      "l2ident": {
+        "id": "AA:00:00:00:00:03",
+        "type": "mac_address"
+      },
+      "vendor_name": "Google, Inc.",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "Pixel Tablet",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.13",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "gateway",
+        "uid": "c0f8b6a1d2e3f4a5b6c7d8e9f0a1b2c3",
+        "mac": "F4:CA:E7:00:00:16",
+        "connectivity_type": "wifi",
+        "rx_rate": 0,
+        "tx_rate": 0,
+        "rx_bytes": 0,
+        "tx_bytes": 0,
+        "wifi_information": {
+          "band": "6g",
+          "standard": "ax",
+          "signal": -63,
+          "phy_rx_rate": 24019,
+          "phy_tx_rate": 24019,
+          "sess_duration": 600,
+          "ssid": "Freebox-Maison",
+          "bssid": "F4:CA:E7:00:00:16"
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:04",
+      "primary_name": "Imprimante HP",
+      "primary_name_manual": true,
+      "host_type": "printer",
+      "l2ident": {
+        "id": "AA:00:00:00:00:04",
+        "type": "mac_address"
+      },
+      "vendor_name": "HP Inc.",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "Imprimante HP",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.14",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "gateway",
+        "uid": "c0f8b6a1d2e3f4a5b6c7d8e9f0a1b2c3",
+        "mac": "F4:CA:E7:00:00:12",
+        "connectivity_type": "wifi",
+        "rx_rate": 10,
+        "tx_rate": 20,
+        "rx_bytes": 0,
+        "tx_bytes": 0,
+        "wifi_information": {
+          "band": "2d4g",
+          "standard": "n",
+          "signal": -71,
+          "phy_rx_rate": 650,
+          "phy_tx_rate": 722,
+          "sess_duration": 1814247,
+          "ssid": "Freebox-Maison",
+          "bssid": "F4:CA:E7:00:00:12"
+        }
+      }
+    },
+    {
+      "id": "ether-f4:ca:e7:11:11:11",
+      "primary_name": "Répéteur Wi-Fi Free",
+      "primary_name_manual": true,
+      "host_type": "networking_device",
+      "l2ident": {
+        "id": "F4:CA:E7:11:11:11",
+        "type": "mac_address"
+      },
+      "vendor_name": "Freebox SAS",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "Répéteur Wi-Fi Free",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.201",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "gateway",
+        "uid": "c0f8b6a1d2e3f4a5b6c7d8e9f0a1b2c3",
+        "mac": "F4:CA:E7:00:00:15",
+        "connectivity_type": "wifi",
+        "rx_rate": 400000,
+        "tx_rate": 900000,
+        "rx_bytes": 0,
+        "tx_bytes": 0,
+        "wifi_information": {
+          "band": "5g",
+          "standard": "be",
+          "signal": -45,
+          "phy_rx_rate": 28820,
+          "phy_tx_rate": 28820,
+          "sess_duration": 259200,
+          "ssid": "Freebox-Maison",
+          "bssid": "F4:CA:E7:00:00:15"
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:06",
+      "primary_name": "Galaxy S23",
+      "primary_name_manual": true,
+      "host_type": "smartphone",
+      "l2ident": {
+        "id": "AA:00:00:00:00:06",
+        "type": "mac_address"
+      },
+      "vendor_name": "Samsung Electronics",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "Galaxy S23",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.16",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "repeater",
+        "uid": "1",
+        "mac": "F4:CA:E7:11:11:15",
+        "connectivity_type": "wifi",
+        "rx_rate": 22,
+        "tx_rate": 33,
+        "rx_bytes": 331755429,
+        "tx_bytes": 32373768678,
+        "wifi_information": {
+          "band": "5g",
+          "standard": "ac",
+          "signal": -59,
+          "phy_rx_rate": 5851,
+          "phy_tx_rate": 7800,
+          "sess_duration": 1814247,
+          "ssid": "Freebox-Maison",
+          "bssid": "F4:CA:E7:11:11:15"
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:07",
+      "primary_name": "Prise connectée",
+      "primary_name_manual": true,
+      "host_type": "other",
+      "l2ident": {
+        "id": "AA:00:00:00:00:07",
+        "type": "mac_address"
+      },
+      "vendor_name": "Espressif Inc.",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "Prise connectée",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.17",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "repeater",
+        "uid": "1",
+        "mac": "F4:CA:E7:11:11:12",
+        "connectivity_type": "wifi",
+        "rx_rate": 5,
+        "tx_rate": 5,
+        "rx_bytes": 0,
+        "tx_bytes": 0,
+        "wifi_information": {
+          "band": "2g4",
+          "standard": "n",
+          "signal": -78,
+          "phy_rx_rate": 722,
+          "phy_tx_rate": 722,
+          "sess_duration": 86400,
+          "ssid": "Freebox-Maison",
+          "bssid": "F4:CA:E7:11:11:12"
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:08",
+      "primary_name": "iPad",
+      "primary_name_manual": true,
+      "host_type": "tablet",
+      "l2ident": {
+        "id": "AA:00:00:00:00:08",
+        "type": "mac_address"
+      },
+      "vendor_name": "Apple, Inc.",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "iPad",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.18",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "repeater",
+        "uid": "2",
+        "mac": "F4:CA:E7:22:22:15",
+        "connectivity_type": "wifi",
+        "rx_rate": 3000,
+        "tx_rate": 150000,
+        "rx_bytes": 0,
+        "tx_bytes": 0,
+        "wifi_information": {
+          "band": "5g",
+          "standard": "ax",
+          "signal": -66,
+          "phy_rx_rate": 8647,
+          "phy_tx_rate": 12009,
+          "sess_duration": 5400,
+          "ssid": "Freebox-Maison",
+          "bssid": "F4:CA:E7:22:22:15"
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:09",
+      "primary_name": "PS5",
+      "primary_name_manual": true,
+      "host_type": "gaming_console",
+      "l2ident": {
+        "id": "AA:00:00:00:00:09",
+        "type": "mac_address"
+      },
+      "vendor_name": "Sony Interactive Entertainment",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "PS5",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.19",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "repeater",
+        "uid": "2",
+        "mac": "F4:CA:E7:22:22:16",
+        "connectivity_type": "wifi",
+        "rx_rate": 50000,
+        "tx_rate": 6250000,
+        "rx_bytes": 0,
+        "tx_bytes": 0,
+        "wifi_information": {
+          "band": "6g",
+          "standard": "be",
+          "signal": -55,
+          "phy_rx_rate": 23059,
+          "phy_tx_rate": 28820,
+          "sess_duration": 10800,
+          "ssid": "Freebox-Maison",
+          "bssid": "F4:CA:E7:22:22:16"
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:10",
+      "primary_name": "Vieux portable",
+      "primary_name_manual": true,
+      "host_type": "laptop",
+      "l2ident": {
+        "id": "AA:00:00:00:00:10",
+        "type": "mac_address"
+      },
+      "vendor_name": "Dell Inc.",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "Vieux portable",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.20",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "repeater",
+        "uid": "2",
+        "mac": "F4:CA:E7:22:22:12",
+        "connectivity_type": "wifi",
+        "rx_rate": 0,
+        "tx_rate": 0,
+        "rx_bytes": 0,
+        "tx_bytes": 0,
+        "wifi_information": {
+          "band": "2d4g",
+          "standard": "g",
+          "signal": -80,
+          "phy_rx_rate": 540,
+          "phy_tx_rate": 540,
+          "sess_duration": 120,
+          "ssid": "Freebox-Maison",
+          "bssid": "F4:CA:E7:22:22:12"
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:11",
+      "primary_name": "",
+      "primary_name_manual": true,
+      "host_type": "",
+      "l2ident": {
+        "id": "AA:00:00:00:00:11",
+        "type": "mac_address"
+      },
+      "vendor_name": "Espressif Inc.",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [],
+      "l3connectivities": [],
+      "access_point": {
+        "type": "repeater",
+        "uid": "2",
+        "connectivity_type": "wifi",
+        "wifi_information": {
+          "band": "2d4g"
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:12",
+      "primary_name": "Appareil du futur",
+      "primary_name_manual": true,
+      "host_type": "other",
+      "l2ident": {
+        "id": "AA:00:00:00:00:12",
+        "type": "mac_address"
+      },
+      "vendor_name": "",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "Appareil du futur",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.22",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "gateway",
+        "uid": "c0f8b6a1d2e3f4a5b6c7d8e9f0a1b2c3",
+        "mac": "F4:CA:E7:00:00:15",
+        "connectivity_type": "wifi",
+        "rx_rate": 0,
+        "tx_rate": 0,
+        "wifi_information": {
+          "band": "60g",
+          "standard": "bn",
+          "signal": -40,
+          "phy_rx_rate": 0,
+          "phy_tx_rate": 0,
+          "sess_duration": 42
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:13",
+      "primary_name": "NAS",
+      "primary_name_manual": true,
+      "host_type": "workstation",
+      "l2ident": {
+        "id": "AA:00:00:00:00:13",
+        "type": "mac_address"
+      },
+      "vendor_name": "Synology Incorporated",
+      "persistent": true,
+      "reachable": true,
+      "active": true,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "NAS",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.23",
+          "af": "ipv4",
+          "active": true,
+          "reachable": true,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "gateway",
+        "uid": "c0f8b6a1d2e3f4a5b6c7d8e9f0a1b2c3",
+        "mac": "F4:CA:E7:00:00:01",
+        "connectivity_type": "ethernet",
+        "rx_rate": 125000,
+        "tx_rate": 250000,
+        "rx_bytes": 1,
+        "tx_bytes": 2,
+        "ethernet_information": {
+          "duplex": "full",
+          "speed": 10000,
+          "max_port_speed": 10000,
+          "link": "up"
+        }
+      }
+    },
+    {
+      "id": "ether-aa:00:00:00:00:14",
+      "primary_name": "Ancien téléphone",
+      "primary_name_manual": true,
+      "host_type": "smartphone",
+      "l2ident": {
+        "id": "AA:00:00:00:00:14",
+        "type": "mac_address"
+      },
+      "vendor_name": "Xiaomi",
+      "persistent": true,
+      "reachable": false,
+      "active": false,
+      "last_time_reachable": 1790000000,
+      "last_activity": 1790000000,
+      "first_activity": 1787408000,
+      "names": [
+        {
+          "name": "Ancien téléphone",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.168.1.24",
+          "af": "ipv4",
+          "active": false,
+          "reachable": false,
+          "last_activity": 1790000000,
+          "last_time_reachable": 1790000000
+        }
+      ],
+      "access_point": {
+        "type": "repeater",
+        "uid": "1",
+        "mac": "F4:CA:E7:11:11:15",
+        "connectivity_type": "wifi",
+        "rx_rate": 0,
+        "tx_rate": 0,
+        "rx_bytes": 0,
+        "tx_bytes": 0,
+        "wifi_information": {
+          "band": "5g",
+          "standard": "ac",
+          "signal": -70,
+          "phy_rx_rate": 4333,
+          "phy_tx_rate": 4333,
+          "sess_duration": 0,
+          "ssid": "Freebox-Maison",
+          "bssid": "F4:CA:E7:11:11:15"
+        }
+      }
+    }
+  ]
+}

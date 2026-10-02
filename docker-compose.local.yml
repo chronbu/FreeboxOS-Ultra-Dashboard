@@ -39,6 +39,8 @@ services:
       - PORT=3000
       - FREEBOX_HOST=${FREEBOX_HOST:-mafreebox.freebox.fr}
       - FREEBOX_TOKEN_FILE=/app/data/freebox_token.json
+      # Raw Freebox payloads on /api/debug/lan-raw (disabled by default)
+      - ENABLE_DEBUG_ENDPOINTS=${ENABLE_DEBUG_ENDPOINTS:-false}
     volumes:
       # Persistent storage for Freebox authentication token
       - freebox_dashboard_data:/app/data

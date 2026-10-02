@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import cron from 'node-cron';
+import cron, { type ScheduledTask } from 'node-cron';
 import { freeboxApi } from './freeboxApi.js';
 import { config } from '../config.js';
 
@@ -17,7 +17,7 @@ const DEFAULT_SCHEDULE: RebootSchedule = {
 
 class RebootSchedulerService {
   private schedule: RebootSchedule;
-  private tasks: cron.ScheduledTask[] = [];
+  private tasks: ScheduledTask[] = [];
   private configPath: string;
 
   constructor() {

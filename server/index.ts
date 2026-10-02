@@ -30,6 +30,7 @@ import notificationsRoutes from './routes/notifications.js';
 import speedtestRoutes from './routes/speedtest.js';
 import capabilitiesRoutes from './routes/capabilities.js';
 import dhcpRoutes from './routes/dhcp.js';
+import debugRoutes, { isDebugEnabled } from './routes/debug.js';
 
 const app = express();
 
@@ -69,6 +70,11 @@ app.use('/api/notifications', notificationsRoutes);
 app.use('/api/speedtest', speedtestRoutes);
 app.use('/api/capabilities', capabilitiesRoutes);
 app.use('/api/dhcp', dhcpRoutes);
+// Debug routes answer 404 unless ENABLE_DEBUG_ENDPOINTS=true
+app.use('/api/debug', debugRoutes);
+if (isDebugEnabled()) {
+  console.warn('[Debug] ENABLE_DEBUG_ENDPOINTS=true: /api/debug/* exposes raw Freebox data');
+}
 
 // Health check
 app.get('/api/health', (_req, res) => {

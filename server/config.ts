@@ -85,6 +85,9 @@ export const API_ENDPOINTS = {
   WIFI_CUSTOM_KEY: '/wifi/custom_key/',      // v14.0 - Guest network configuration
   WIFI_MLO_CONFIG: '/wifi/mlo/config/',      // v14.0 - Multi Link Operation (WiFi 7)
 
+  // Repeaters (Freebox API v8+)
+  REPEATER: '/repeater/',
+
   // LAN
   LAN_CONFIG: '/lan/config/',
   LAN_BROWSER: '/lan/browser/interfaces/',

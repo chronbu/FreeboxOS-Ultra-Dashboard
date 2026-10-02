@@ -13,7 +13,7 @@ import {
 } from './components/widgets';
 import { ActionButton, UnsupportedFeature } from './components/ui';
 import { LoginModal, TrafficHistoryModal, WifiSettingsModal, CreateVmModal } from './components/modals';
-import { TvPage, PhonePage, FilesPage, VmsPage, AnalyticsPage, SettingsPage, NetworkPage } from './pages';
+import { TvPage, PhonePage, FilesPage, VmsPage, AnalyticsPage, SettingsPage, NetworkPage, WifiClientsPage } from './pages';
 import { usePolling } from './hooks/usePolling';
 import { useConnectionWebSocket } from './hooks/useConnectionWebSocket';
 import {
@@ -41,7 +41,8 @@ import {
   Download,
   History,
   Clock,
-  ArrowDownWideNarrow
+  ArrowDownWideNarrow,
+  Smartphone
 } from 'lucide-react';
 
 const App: React.FC = () => {
@@ -51,7 +52,7 @@ const App: React.FC = () => {
   // Data stores
   const { info: systemInfo, temperatureHistory: systemTempHistory, fetchSystemInfo, reboot } = useSystemStore();
   const { status: connectionStatus, history: networkHistory, extendedHistory, temperatureHistory, fetchConnectionStatus, fetchExtendedHistory, fetchTemperatureHistory } = useConnectionStore();
-  const { networks: wifiNetworks, isLoading: wifiLoading, fetchWifiStatus, toggleBss } = useWifiStore();
+  const { networks: wifiNetworks, repeaterDevices: wifiRepeaterDevices, isLoading: wifiLoading, fetchWifiStatus, toggleBss } = useWifiStore();
   const { devices, fetchDevices } = useLanStore();
   const { tasks: downloads, fetchDownloads } = useDownloadsStore();
   const { vms, isLoading: vmLoading, error: vmError, fetchVms, startVm, stopVm } = useVmStore();
@@ -222,6 +223,21 @@ const App: React.FC = () => {
     return (
       <div className="min-h-screen pb-20 bg-[#050505] text-gray-300 font-sans selection:bg-blue-500/30">
         <NetworkPage onBack={() => setCurrentPage('dashboard')} />
+        <Footer
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          onReboot={handleReboot}
+          onLogout={handleLogout}
+        />
+      </div>
+    );
+  }
+
+  // Render WiFi per access point page
+  if (currentPage === 'wifi') {
+    return (
+      <div className="min-h-screen pb-20 bg-[#050505] text-gray-300 font-sans selection:bg-blue-500/30">
+        <WifiClientsPage onBack={() => setCurrentPage('dashboard')} />
         <Footer
           currentPage={currentPage}
           onPageChange={handlePageChange}
@@ -416,13 +432,19 @@ const App: React.FC = () => {
                   <ActionButton label="Filtrage" icon={Sliders} onClick={() => { setWifiModalTab('filter'); setIsWifiModalOpen(true); }} />
                   <ActionButton label="Planif." icon={Calendar} onClick={() => { setWifiModalTab('planning'); setIsWifiModalOpen(true); }} />
                   <ActionButton label="WPS" icon={WifiIcon} onClick={() => { setWifiModalTab('wps'); setIsWifiModalOpen(true); }} />
+                  <ActionButton label="Appareils" icon={Smartphone} onClick={() => setCurrentPage('wifi')} />
                 </div>
               }
             >
               {wifiLoading ? (
                 <div className="text-center text-gray-500 py-4">Chargement...</div>
               ) : wifiNetworks.length > 0 ? (
-                <WifiPanel networks={wifiNetworks} onToggle={handleWifiToggle} />
+                <WifiPanel
+                  networks={wifiNetworks}
+                  repeaterDevices={wifiRepeaterDevices}
+                  onToggle={handleWifiToggle}
+                  onShowDevices={() => setCurrentPage('wifi')}
+                />
               ) : (
                 <div className="text-center text-gray-500 py-4">
                   Aucun réseau WiFi configuré
