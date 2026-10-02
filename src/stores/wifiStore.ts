@@ -22,10 +22,18 @@ export interface WifiMloConfig {
   enabled: boolean;
 }
 
+// WiFi devices attached to the repeaters (not counted on the box radios)
+export interface RepeaterDevicesSummary {
+  total: number;
+  byBand: Record<string, number>;  // '2g4' | '5g' | '6g'
+}
+
 interface WifiState {
   config: WifiConfig | null;
   networks: WifiNetwork[];
-  totalDevices: number;
+  totalDevices: number;          // box + repeaters
+  gatewayDevices: number;        // box radios only
+  repeaterDevices: RepeaterDevicesSummary;
   isLoading: boolean;
   error: string | null;
 
@@ -75,6 +83,8 @@ export const useWifiStore = create<WifiState>((set, get) => ({
   config: null,
   networks: [],
   totalDevices: 0,
+  gatewayDevices: 0,
+  repeaterDevices: { total: 0, byBand: {} },
   isLoading: false,
   error: null,
   tempDisableStatus: null,
@@ -94,15 +104,26 @@ export const useWifiStore = create<WifiState>((set, get) => ({
         aps?: WifiAp[];
         bss: ExtendedBss[];
         wifiDeviceCount?: number;
-        devicesByBand?: Record<string, number>;
+        gatewayDeviceCount?: number;
+        devicesByBand?: Record<string, number>;  // box radios only
+        repeaterDeviceCount?: number;
+        repeaterDevicesByBand?: Record<string, number>;
       }>(API_ROUTES.WIFI_FULL);
 
       if (response.success && response.result) {
         const { config, aps, bss, wifiDeviceCount, devicesByBand } = response.result;
+        const deviceCounts = {
+          totalDevices: wifiDeviceCount || 0,
+          gatewayDevices: response.result.gatewayDeviceCount ?? wifiDeviceCount ?? 0,
+          repeaterDevices: {
+            total: response.result.repeaterDeviceCount || 0,
+            byBand: response.result.repeaterDevicesByBand || {}
+          }
+        };
 
         // Handle case where bss is empty or not an array
         if (!bss || !Array.isArray(bss) || bss.length === 0) {
-          set({ config: config || null, networks: [], totalDevices: wifiDeviceCount || 0, isLoading: false });
+          set({ config: config || null, networks: [], ...deviceCounts, isLoading: false });
           return;
         }
 
@@ -179,6 +200,7 @@ export const useWifiStore = create<WifiState>((set, get) => ({
               }
 
               // Get device count for this band from devicesByBand
+              // (box clients only, repeater clients are counted separately)
               let bandDeviceCount = 0;
               if (devicesByBand) {
                 if (band === '6GHz') bandDeviceCount = devicesByBand['6g'] || 0;
@@ -210,10 +232,8 @@ export const useWifiStore = create<WifiState>((set, get) => ({
           return order[a.band] - order[b.band];
         });
 
-        // Use wifiDeviceCount from backend (counted from LAN devices)
-        const totalDevices = wifiDeviceCount || 0;
-
-        set({ config, networks, totalDevices, isLoading: false });
+        // Device counts from backend (counted from LAN devices)
+        set({ config, networks, ...deviceCounts, isLoading: false });
       } else {
         set({ isLoading: false, error: response.error?.message });
       }
